@@ -14,6 +14,7 @@ Cart.prototype.addItem = function(product, quantity) {
 
 Cart.prototype.saveToLocalStorage = function() {
 
+
 };
 
 const CartItem = function(product, quantity) {
