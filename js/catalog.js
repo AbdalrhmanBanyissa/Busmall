@@ -1,5 +1,6 @@
 /* global Product, Cart */
 
+
 'use strict';
 
 // Set up an empty cart for use on this page.
