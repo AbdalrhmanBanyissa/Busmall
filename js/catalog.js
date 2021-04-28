@@ -9,19 +9,71 @@ const cart = new Cart([]);
 // (the things in the Product.allProducts array) into the drop down list.
 function populateForm() {
 
+  //TODO: Add an <option> tag inside the form's select for each product
+  const selectElement = document.getElementById('items');
+  selectElement.required = true ;
+  quantity.required = true ;
+  const option = document.createElement('option')
+  selectElement.appendChild(option)
+  for (let i in Product.allProducts) {
+  const optionElement = document.createElement('option')
+  selectElement.appendChild(optionElement)
+  optionElement.textContent = Product.allProducts[i].name;
+  optionElement.value = Product.allProducts[i].name;
+    }
 
+}
 // When someone submits the form, we need to add the selected item to the cart
 // object, save the whole thing back to local storage and update the screen
 // so that it shows the # of items in the cart and a quick preview of the cart itself.
 function handleSubmit(event) {
+  event.preventDefault();
 
+  // TODO: Prevent the page from reloading
 
   // Do all the things ...
   addSelectedItemToCart();
   cart.saveToLocalStorage();
   updateCounter();
   updateCartPreview();
+  document.getElementById('catalog').reset();
+}
 
+// TODO: Add the selected item and quantity to the cart
+  // TODO: suss out the item picked from the select list
+  // TODO: get the quantity
+  // TODO: using those, add one item to the Cart
+function addSelectedItemToCart() {
+  const selectElement = document.getElementById('items');
+  const index = selectElement.selectedIndex;
+  const item = selectElement.options[index].value;
+  const quantity = document.getElementById('quantity');
+  quantity.required = true ;
+  const quantityVal = quantity.value;
+  cart.addItem(item,quantityVal);
+  console.log( item , quantityVal );
+}
+
+// TODO: Update the cart count in the header nav with the number of items in the Cart
+function updateCounter() {
+  const headerCounter = document.getElementById('itemCount');
+  headerCounter.textContent=`(${cart.items.length})`
+}
+
+// TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
+function updateCartPreview() {
+  // TODO: Get the item and quantity from the form
+  const selectElement = document.getElementById('items');
+  const selectedItemIndex = selectElement.selectedIndex;
+  const selectedItem = selectElement.options[selectedItemIndex].text;
+  const quantity = document.getElementById('quantity');
+  const quantityVal = quantity.value;
+  const cartContents = document.getElementById('cartContents');
+  const ul = document.createElement('ul')
+  cartContents.appendChild(ul)
+  const li = document.createElement('li')
+  ul.appendChild(li)
+  li.textContent= `(${quantityVal}) of ${selectedItem}`
   // TODO: Get the item and quantity from the form
   // TODO: Add a new element to the cartContents div with that information
 }
@@ -35,3 +87,4 @@ catalogForm.addEventListener('submit', handleSubmit);
 // Before anything else of value can happen, we need to fill in the select
 // drop down list in the form.
 populateForm();
+
